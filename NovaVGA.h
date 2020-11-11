@@ -3,7 +3,7 @@
 
 #include <cstdlib> // NULL
 
-#include "SDL2/SDL.h"
+#include "SDL2/SDL.h" // SDL_Renderer
 
 struct Point {
   char x;
@@ -105,6 +105,8 @@ class NovaVGAClass {
     static void init(uint8_t cspin);
     static void close();
 
+    static SDL_Renderer *getRenderer();
+
     static void drawChar(const char *bitmap, uint8_t x, uint8_t y, uint8_t color);
     static void drawChar(char ch, uint8_t x, uint8_t y, uint8_t color);
     static void drawChar(char ch, Point p, uint8_t color);
@@ -115,7 +117,7 @@ class NovaVGAClass {
     static void fillRect(uint8_t x, uint8_t y, uint8_t w, uint8_t h, uint8_t color);
     static void fillRect(Rect r, uint8_t color);
     static void fillScreen(uint8_t color);
-    static void writePixel(uint8_t x, uint8_t, uint8_t color);
+    static void writePixel(uint8_t x, uint8_t y, uint8_t color);
     static void writePixel(Point p, uint8_t color);
 };
 
