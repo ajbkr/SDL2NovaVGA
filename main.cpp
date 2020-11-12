@@ -12,73 +12,75 @@ void setup() {
 
   Rect r(0, 0, 10, 10);
   NovaVGA.fillRect(r, NovaVGA.Black);
-  // ...
+  NovaVGA.drawString("Black", r.left + r.width + 3, r.top + 2, NovaVGA.White);
 
-  r.top += r.height - 1;
+  r.top += r.height + 1;
   NovaVGA.fillRect(r, NovaVGA.Blue);
-  // ...
+  NovaVGA.drawString("Blue", r.left + r.width + 3, r.top + 2, NovaVGA.White);
 
-  r.top += r.height - 1;
+  r.top += r.height + 1;
   NovaVGA.fillRect(r, NovaVGA.Green);
-  // ...
+  NovaVGA.drawString("Green", r.left + r.width + 3, r.top + 2, NovaVGA.White);
 
-  r.top += r.height - 1;
+  r.top += r.height + 1;
   NovaVGA.fillRect(r, NovaVGA.Cyan);
-  // ...
+  NovaVGA.drawString("Cyan", r.left + r.width + 3, r.top + 2, NovaVGA.White);
 
-  r.top += r.height - 1;
+  r.top += r.height + 1;
   NovaVGA.fillRect(r, NovaVGA.Red);
-  // ...
+  NovaVGA.drawString("Red", r.left + r.width + 3, r.top + 2, NovaVGA.White);
 
-  r.top += r.height - 1;
+  r.top += r.height + 1;
   NovaVGA.fillRect(r, NovaVGA.Magenta);
-  // ...
+  NovaVGA.drawString("Magenta", r.left + r.width + 3, r.top + 2, NovaVGA.White);
 
-  r.top += r.height - 1;
+  r.top += r.height + 1;
   NovaVGA.fillRect(r, NovaVGA.Brown);
-  // ...
+  NovaVGA.drawString("Brown", r.left + r.width + 3, r.top + 2, NovaVGA.White);
 
-  r.top += r.height - 1;
+  r.top += r.height + 1;
   NovaVGA.fillRect(r, NovaVGA.LightGray);
-  // ...
+  NovaVGA.drawString("LightGray", r.left + r.width + 3, r.top + 2, NovaVGA.White);
 
-  r.top += r.height - 1;
+  r.top += r.height + 1;
   NovaVGA.fillRect(r, NovaVGA.LightMagenta);
-  // ...
+  NovaVGA.drawString("LightMagenta", r.left + r.width + 3, r.top + 2, NovaVGA.White);
 
-  r.top += r.height - 1;
+  r.top += r.height + 1;
   NovaVGA.fillRect(r, NovaVGA.LightBlue);
-  // ...
+  NovaVGA.drawString("LightBlue", r.left + r.width + 3, r.top + 2, NovaVGA.White);
 
-  r.top += r.height - 1;
+  r.top += r.height + 1;
   NovaVGA.fillRect(r, NovaVGA.LightGreen);
-  // ...
+  NovaVGA.drawString("LightGreen", r.left + r.width + 3, r.top + 2, NovaVGA.White);
 
   r.left = 60;
   r.top = 0;
   NovaVGA.fillRect(r, NovaVGA.LightCyan);
-  // ...
+  NovaVGA.drawString("LightCyan", r.left + r.width + 3, r.top + 2, NovaVGA.White);
 
-  r.top += r.height - 1;
+  r.top += r.height + 1;
   NovaVGA.fillRect(r, NovaVGA.LightRed);
-  // ...
+  NovaVGA.drawString("LightRed", r.left + r.width + 3, r.top + 2, NovaVGA.White);
 
-  r.top += r.height - 1;
+  r.top += r.height + 1;
   NovaVGA.fillRect(r, NovaVGA.Yellow);
-  // ...
+  NovaVGA.drawString("Yellow", r.left + r.width + 3, r.top + 2, NovaVGA.White);
 
-  r.top += r.height - 1;
+  r.top += r.height + 1;
   NovaVGA.fillRect(r, NovaVGA.Gray);
-  // ...
+  NovaVGA.drawString("Gray", r.left + r.width + 3, r.top + 2, NovaVGA.White);
 
-  r.top += r.height - 1;
+  r.top += r.height + 1;
   NovaVGA.fillRect(r, NovaVGA.White);
-  // ...
+  NovaVGA.drawString("White", r.left + r.width + 3, r.top + 2, NovaVGA.White);
 
+#if 0
   NovaVGA.writePixel(0, 0, NovaVGA.White);
   NovaVGA.writePixel(NovaVGA.SCREEN_WIDTH - 1, 0, NovaVGA.White);
   NovaVGA.writePixel(NovaVGA.SCREEN_WIDTH - 1, NovaVGA.SCREEN_HEIGHT - 1, NovaVGA.White);
   NovaVGA.writePixel(0, NovaVGA.SCREEN_HEIGHT - 1, NovaVGA.White);
+#endif
 
 #if !defined(ARDUINO)
   SDL_RenderPresent(NovaVGA.getRenderer());
