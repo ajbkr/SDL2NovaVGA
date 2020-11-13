@@ -103,10 +103,6 @@ static const Uint8 font8x8_[] = {
   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00  /*   */
 };
 
-static SDL_Renderer *renderer_ = NULL;
-static SDL_Surface *surface_ = NULL;
-static SDL_Window *window_ = NULL;
-
 static Uint32 palette_[64];
 
 static void init_rgb222_palette_(const SDL_PixelFormat *format) {
@@ -124,6 +120,10 @@ static void init_rgb222_palette_(const SDL_PixelFormat *format) {
 }
 
 NovaVGAClass NovaVGA;
+
+SDL_Renderer *NovaVGAClass::renderer_ = NULL;
+SDL_Surface *NovaVGAClass::surface_ = NULL;
+SDL_Window *NovaVGAClass::window_ = NULL;
 
 //void NovaVGAClass::init(const String title) {
 void NovaVGAClass::init(const char *title) {
@@ -150,14 +150,21 @@ void NovaVGAClass::init(uint8_t cspin) {
   init("SDL2NovaVGA");
 }
 
-void NovaVGAClass::close() {
+void NovaVGAClass::quit() {
   SDL_DestroyRenderer(renderer_);
+  renderer_ = NULL;
+
+  // no SDL_DestroySurface()
+  surface_ = NULL;
+
   SDL_DestroyWindow(window_);
+  window_ = NULL;
+
   SDL_Quit();
 }
 
-SDL_Renderer *NovaVGAClass::getRenderer() {
-  return renderer_;
+void NovaVGAClass::renderPresent() {
+  SDL_RenderPresent(renderer_);
 }
 
 void NovaVGAClass::drawChar(const char *bitmap, uint8_t x, uint8_t y, uint8_t color) {

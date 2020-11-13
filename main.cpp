@@ -1,7 +1,3 @@
-#include <iostream> // cin, getline()
-#include <cstdlib>  // EXIT_SUCCESS
-#include <string>   // string
-
 #include "NovaVGA.h"
 
 #define CS_PIN 10
@@ -83,7 +79,7 @@ void setup() {
 #endif
 
 #if !defined(ARDUINO)
-  SDL_RenderPresent(NovaVGA.getRenderer());
+  NovaVGA.renderPresent();
 #endif
 }
 
@@ -92,13 +88,17 @@ void loop() {
 }
 
 #if !defined(ARDUINO)
+#include <iostream> // cin, getline()
+#include <cstdlib>  // EXIT_SUCCESS
+#include <string>   // string
+
 int main(int argc, char *argv[]) {
   std::string s;
 
   setup();
   //loop();
   std::getline(std::cin, s);
-  NovaVGA.close();
+  NovaVGA.quit();
   // XXX unreached
   return EXIT_SUCCESS;
 }

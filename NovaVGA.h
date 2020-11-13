@@ -1,9 +1,7 @@
 #ifndef NOVAVGA_H_
 #define NOVAVGA_H_
 
-#include <cstdlib> // NULL
-
-#include "SDL2/SDL.h" // SDL_Renderer
+#include "SDL2/SDL.h" // SDL_Renderer, SDL_Surface, SDL_Window
 
 struct Point {
   char x;
@@ -71,6 +69,10 @@ struct Rect {
 
 class NovaVGAClass {
   private:
+    static SDL_Renderer *renderer_; // extension
+    static SDL_Surface *surface_;   // extension
+    static SDL_Window *window_;     // extension
+
     static void drawChar_(const char *bitmap, uint8_t x, uint8_t y, uint8_t color);
 
   public:
@@ -103,9 +105,9 @@ class NovaVGAClass {
     //static void init(const String title);
     static void init(const char *title);
     static void init(uint8_t cspin);
-    static void close();
+    static void quit(); // extension
 
-    static SDL_Renderer *getRenderer();
+    static void renderPresent(); // extension
 
     static void drawChar(const char *bitmap, uint8_t x, uint8_t y, uint8_t color);
     static void drawChar(char ch, uint8_t x, uint8_t y, uint8_t color);
