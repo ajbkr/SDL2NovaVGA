@@ -96,7 +96,7 @@ int main(int argc, char *argv[]) {
   std::string s;
 
   setup();
-  //loop();
+  loop();
   std::getline(std::cin, s);
   NovaVGA.quit();
   // XXX unreached
