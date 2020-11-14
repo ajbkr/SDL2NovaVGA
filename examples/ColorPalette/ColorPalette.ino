@@ -70,17 +70,6 @@ void setup() {
   r.top += r.height + 1;
   NovaVGA.fillRect(r, NovaVGA.White);
   NovaVGA.drawString("White", r.left + r.width + 3, r.top + 2, NovaVGA.White);
-
-#if 0
-  NovaVGA.writePixel(0, 0, NovaVGA.White);
-  NovaVGA.writePixel(NovaVGA.SCREEN_WIDTH - 1, 0, NovaVGA.White);
-  NovaVGA.writePixel(NovaVGA.SCREEN_WIDTH - 1, NovaVGA.SCREEN_HEIGHT - 1, NovaVGA.White);
-  NovaVGA.writePixel(0, NovaVGA.SCREEN_HEIGHT - 1, NovaVGA.White);
-#endif
-
-#if !defined(ARDUINO)
-  NovaVGA.renderPresent();
-#endif
 }
 
 void loop() {

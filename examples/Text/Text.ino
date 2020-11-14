@@ -16,10 +16,6 @@ void setup() {
   NovaVGA.drawString("Hello\nWorld", 0, 0, NovaVGA.Green);
 
   row = NovaVGA.CHAR_HEIGHT * 3;
-
-#if !defined(ARDUINO)
-  NovaVGA.renderPresent();
-#endif
 }
 
 void loop() {

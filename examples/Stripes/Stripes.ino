@@ -21,10 +21,6 @@ void setup() {
   NovaVGA.init(CS_PIN);
 
   fillStripes(NovaVGA.Green, NovaVGA.Black, true);
-
-#if !defined(ARDUINO)
-  NovaVGA.renderPresent();
-#endif
 }
 
 void loop() {
