@@ -109,8 +109,8 @@ class NovaVGAClass {
     static const uint8_t Orange       = 0x34;
     static const uint8_t None         = 0xff;
 
-    //static void init(const String title);
-    static void init(const char *title);
+    //static void init(const String title, int zoom_level);
+    static void init(const char *title, int zoom_level);
     static void init(uint8_t cspin);
     static void quit(); // extension
 

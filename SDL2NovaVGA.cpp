@@ -5,7 +5,7 @@
 
 #define STEP 255 / (4 - 1)
 
-#define ZOOM_LEVEL 4
+#define ZOOM_LEVEL 1
 
 NovaVGAClass NovaVGA;
 
@@ -17,16 +17,16 @@ SDL_Surface *NovaVGAClass::surface_ = NULL;
 SDL_Texture *NovaVGAClass::texture_ = NULL;
 SDL_Window *NovaVGAClass::window_ = NULL;
 
-//void NovaVGAClass::init(const String title) {
-void NovaVGAClass::init(const char *title) {
+//void NovaVGAClass::init(const String title, int zoom_level) {
+void NovaVGAClass::init(const char *title, int zoom_level) {
   if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
     std::cerr << "SDL_Init: " << SDL_GetError() << std::endl;
     exit(EXIT_FAILURE);
   }
 
   if ( (window_ = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED,
-    SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH * ZOOM_LEVEL,
-    SCREEN_HEIGHT * ZOOM_LEVEL, SDL_WINDOW_SHOWN)) == NULL) {
+    SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH * zoom_level,
+    SCREEN_HEIGHT * zoom_level, SDL_WINDOW_SHOWN)) == NULL) {
     std::cerr << "SDL_CreateWindow: " << SDL_GetError() << std::endl;
     exit(EXIT_FAILURE);
   }
@@ -49,7 +49,7 @@ void NovaVGAClass::init(uint8_t cspin) {
   // XXX unused
   cspin_ = cspin;
 
-  init("SDL2NovaVGA");
+  init("SDL2NovaVGA", ZOOM_LEVEL);
 }
 
 void NovaVGAClass::quit() {

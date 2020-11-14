@@ -3,7 +3,11 @@
 #define CS_PIN 10
 
 void setup() {
+#if !defined(ARDUINO)
+  NovaVGA.init("ColorPalette", 4);
+#else
   NovaVGA.init(CS_PIN);
+#endif
   NovaVGA.fillScreen(NovaVGA.Black);
 
   Rect r(0, 0, 10, 10);

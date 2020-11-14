@@ -18,7 +18,11 @@ void fillStripes(uint8_t color1, uint8_t color2, bool vertical) {
 }
 
 void setup() {
+#if !defined(ARDUINO)
+  NovaVGA.init("Stripes", 4);
+#else
   NovaVGA.init(CS_PIN);
+#endif
 
   fillStripes(NovaVGA.Green, NovaVGA.Black, true);
 }

@@ -9,7 +9,11 @@ int row = 0;
 int col = 0;
 
 void setup() {
+#if !defined(ARDUINO)
+  NovaVGA.init("Text", 4);
+#else
   NovaVGA.init(CS_PIN);
+#endif
 
   NovaVGA.fillScreen(NovaVGA.Black);
 
