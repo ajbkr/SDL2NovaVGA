@@ -5,24 +5,10 @@
 
 #define STEP 255 / (4 - 1)
 
-static Uint32 palette_[64];
-
-static void init_rgb222_palette_(const SDL_PixelFormat *format) {
-  int r, g, b;
-  int i;
-
-  i = 0;
-  for (r = 0; r < 4; ++r) {
-    for (g = 0; g < 4; ++g) {
-      for (b = 0; b < 4; ++b) {
-        palette_[i++] = SDL_MapRGB(format, r * STEP, g * STEP, b * STEP);
-      }
-    }
-  }
-}
 
 NovaVGAClass NovaVGA;
 
+uint32_t NovaVGAClass::palette_[64];
 uint8_t NovaVGAClass::cspin_;
 
 SDL_Renderer *NovaVGAClass::renderer_ = NULL;
@@ -47,7 +33,7 @@ void NovaVGAClass::init(const char *title) {
 
   surface_ = SDL_GetWindowSurface(window_);
 
-  init_rgb222_palette_(surface_->format);
+  initRgb222Palette_(surface_->format);
 
   SDL_SetRenderDrawBlendMode(renderer_, SDL_BLENDMODE_BLEND);
 
@@ -80,6 +66,20 @@ void NovaVGAClass::quit() {
   window_ = NULL;
 
   SDL_Quit();
+}
+
+void NovaVGAClass::initRgb222Palette_(const SDL_PixelFormat *format) {
+  int r, g, b;
+  int i;
+
+  i = 0;
+  for (r = 0; r < 4; ++r) {
+    for (g = 0; g < 4; ++g) {
+      for (b = 0; b < 4; ++b) {
+        palette_[i++] = SDL_MapRGB(format, r * STEP, g * STEP, b * STEP);
+      }
+    }
+  }
 }
 
 void NovaVGAClass::renderPresent_() {

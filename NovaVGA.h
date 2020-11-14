@@ -1,7 +1,8 @@
 #ifndef NOVAVGA_H_
 #define NOVAVGA_H_
 
-#include "SDL2/SDL.h" // SDL_Renderer, SDL_Surface, SDL_Texture, SDL_Window
+#include "SDL2/SDL.h" // SDL_PixelFormat, SDL_Renderer, SDL_Surface,
+                      // SDL_Texture, SDL_Window
 
 struct Point {
   char x;
@@ -69,6 +70,7 @@ struct Rect {
 
 class NovaVGAClass {
   private:
+    static uint32_t palette_[]; // extension
     static uint8_t cspin_;
 
     static SDL_Renderer *renderer_; // extension
@@ -77,7 +79,8 @@ class NovaVGAClass {
     static SDL_Window *window_;     // extension
 
     static void drawChar(const char *bitmap, uint8_t x, uint8_t y, uint8_t color);
-    static void renderPresent_(); // extension
+    static void initRgb222Palette_(const SDL_PixelFormat *format); // extension
+    static void renderPresent_();                                  // extension
 
   public:
     static const uint8_t SCREEN_WIDTH  = 160;
