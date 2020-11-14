@@ -5,6 +5,7 @@
 
 #define STEP 255 / (4 - 1)
 
+#define ZOOM_LEVEL 4
 
 NovaVGAClass NovaVGA;
 
@@ -24,7 +25,8 @@ void NovaVGAClass::init(const char *title) {
   }
 
   if ( (window_ = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED,
-    SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN)) == NULL) {
+    SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH * ZOOM_LEVEL,
+    SCREEN_HEIGHT * ZOOM_LEVEL, SDL_WINDOW_SHOWN)) == NULL) {
     std::cerr << "SDL_CreateWindow: " << SDL_GetError() << std::endl;
     exit(EXIT_FAILURE);
   }
