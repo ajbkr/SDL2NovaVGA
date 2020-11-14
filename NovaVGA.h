@@ -70,6 +70,7 @@ struct Rect {
 
 class NovaVGAClass {
   private:
+    static bool manual_render_present_;
     static uint32_t palette_[]; // extension
     static uint8_t cspin_;
 
@@ -80,7 +81,6 @@ class NovaVGAClass {
 
     static void drawChar(const char *bitmap, uint8_t x, uint8_t y, uint8_t color);
     static void initRgb222Palette_(const SDL_PixelFormat *format); // extension
-    static void renderPresent_();                                  // extension
 
   public:
     static const uint8_t SCREEN_WIDTH  = 160;
@@ -109,10 +109,12 @@ class NovaVGAClass {
     static const uint8_t Orange       = 0x34;
     static const uint8_t None         = 0xff;
 
-    //static void init(const String title, int zoom_level);
-    static void init(const char *title, int zoom_level);
+    //static void init(const String title, bool manual_render_present, int zoom_level);
+    static void init(const char *title, bool manual_render_present, int zoom_level); // extension
     static void init(uint8_t cspin);
     static void quit(); // extension
+
+    static void renderPresent(); // extension
 
     static void drawChar(char ch, uint8_t x, uint8_t y, uint8_t color);
     static void drawChar(char ch, Point p, uint8_t color);

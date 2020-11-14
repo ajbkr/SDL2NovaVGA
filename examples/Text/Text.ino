@@ -10,7 +10,7 @@ int col = 0;
 
 void setup() {
 #if !defined(ARDUINO)
-  NovaVGA.init("Text", 4);
+  NovaVGA.init("Text", false, 4);
 #else
   NovaVGA.init(CS_PIN);
 #endif

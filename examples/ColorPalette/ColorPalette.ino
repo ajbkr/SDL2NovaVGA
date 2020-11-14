@@ -1,10 +1,14 @@
 #include "NovaVGA.h"
 
+#if !defined(ARDUINO)
+#define MANUAL_RENDER_PRESENT true
+#endif
+
 #define CS_PIN 10
 
 void setup() {
 #if !defined(ARDUINO)
-  NovaVGA.init("ColorPalette", 4);
+  NovaVGA.init("ColorPalette", MANUAL_RENDER_PRESENT, 4);
 #else
   NovaVGA.init(CS_PIN);
 #endif
@@ -74,6 +78,10 @@ void setup() {
   r.top += r.height + 1;
   NovaVGA.fillRect(r, NovaVGA.White);
   NovaVGA.drawString("White", r.left + r.width + 3, r.top + 2, NovaVGA.White);
+
+#if !defined(ARDUINO) && defined(MANUAL_RENDER_PRESENT)
+  NovaVGA.renderPresent();
+#endif
 }
 
 void loop() {

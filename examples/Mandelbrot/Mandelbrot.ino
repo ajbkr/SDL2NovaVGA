@@ -1,5 +1,9 @@
 #include "NovaVGA.h"
 
+#if !defined(ARDUINO)
+#define MANUAL_RENDER_PRESENT true
+#endif
+
 #define CS_PIN 10
 
 uint8_t mandelbrotPoint(float x, float y) {
@@ -65,7 +69,7 @@ void mandelbrotDraw(float center_x, float center_y, float radius) {
 
 void setup() {
 #if !defined(ARDUINO)
-  NovaVGA.init("Mandelbrot", 4);
+  NovaVGA.init("Mandelbrot", MANUAL_RENDER_PRESENT, 4);
 #else
   NovaVGA.init(CS_PIN);
 #endif
@@ -73,6 +77,10 @@ void setup() {
   NovaVGA.fillScreen(NovaVGA.Black);
 
   mandelbrotDraw(-1.0F, 0.0F, 1.0F);
+
+#if !defined(ARDUINO) && defined(MANUAL_RENDER_PRESENT)
+  NovaVGA.renderPresent();
+#endif
 }
 
 void loop() {
