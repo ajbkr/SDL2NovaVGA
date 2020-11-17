@@ -1,7 +1,11 @@
 #ifndef LENNA_H_
 #define LENNA_H_
 
+#if !defined(ARDUINO)
 const unsigned char lenna[] = {
+#else
+const unsigned char lenna[] PROGMEM = {
+#endif
   /* row 0 */
   0x3a,
   0x39,

@@ -19,7 +19,11 @@ void setup() {
 
   for (y = 0; y < NovaVGA.SCREEN_HEIGHT; ++y) {
     for (x = 0; x < NovaVGA.SCREEN_WIDTH; ++x) {
+#if !defined(ARDUINO)
       NovaVGA.writePixel(x, y, lenna[y * NovaVGA.SCREEN_WIDTH + x]);
+#else
+      NovaVGA.writePixel(x, y, pgm_read_byte(lenna + y * NovaVGA.SCREEN_WIDTH + x));
+#endif
     }
   }
 
@@ -29,8 +33,6 @@ void setup() {
 }
 
 void loop() {
-  // XXX ...
-
   // do nothing
 }
 
