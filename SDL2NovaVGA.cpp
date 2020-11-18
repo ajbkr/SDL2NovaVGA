@@ -1,4 +1,5 @@
 #include <iostream> // cerr, endl
+#include <cstdlib>  // exit(), EXIT_FAILURE
 
 #include "NovaVGA.h" // NovaVGAClass, Point, Rect
 #include "font.h"    // font8x8
@@ -12,15 +13,16 @@ NovaVGAClass NovaVGA;
 bool NovaVGAClass::manual_render_present_ = false;
 uint32_t NovaVGAClass::palette_[64];
 uint8_t NovaVGAClass::cspin_;
+bool NovaVGAClass::quit_;
 
 SDL_Renderer *NovaVGAClass::renderer_ = NULL;
 SDL_Surface *NovaVGAClass::surface_ = NULL;
 SDL_Texture *NovaVGAClass::texture_ = NULL;
 SDL_Window *NovaVGAClass::window_ = NULL;
 
-//void NovaVGAClass::init(const String title, bool manual_render_present, int zoom_level) {
 void NovaVGAClass::init(const char *title, bool manual_render_present, int zoom_level) {
-  if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
+  // init video and events subsystems
+  if (SDL_Init(SDL_INIT_VIDEO) < 0) {
     std::cerr << "SDL_Init: " << SDL_GetError() << std::endl;
     exit(EXIT_FAILURE);
   }
@@ -46,10 +48,11 @@ void NovaVGAClass::init(const char *title, bool manual_render_present, int zoom_
   SDL_SetRenderTarget(renderer_, texture_);
 
   manual_render_present_ = manual_render_present;
+  quit_ = false;
 }
 
 void NovaVGAClass::init(uint8_t cspin) {
-  // XXX unused
+  // unused
   cspin_ = cspin;
 
   init("SDL2NovaVGA", manual_render_present_, ZOOM_LEVEL);
@@ -73,12 +76,24 @@ void NovaVGAClass::quit() {
   SDL_Quit();
 }
 
+void NovaVGAClass::pollEventRun() {
+  SDL_Event event;
+
+  if (SDL_PollEvent(&event) == 1 && event.type == SDL_QUIT) {
+    quit_ = true;
+  }
+}
+
 void NovaVGAClass::renderPresent() {
   SDL_SetRenderTarget(renderer_, NULL);
   SDL_RenderCopy(renderer_, texture_, NULL, NULL);
   SDL_RenderPresent(renderer_);
 
   SDL_SetRenderTarget(renderer_, texture_);
+}
+
+bool NovaVGAClass::shouldQuit() {
+  return quit_;
 }
 
 void NovaVGAClass::initRgb222Palette_(const SDL_PixelFormat *format) {
@@ -124,7 +139,6 @@ void NovaVGAClass::drawChar(char ch, Point p, uint8_t color) {
   drawChar(ch, p.x, p.y, color);
 }
 
-//void NovaVGAClass::drawString(const String str, uint8_t x, uint8_t y, uint8_t color) { // XXX String
 void NovaVGAClass::drawString(const char *str, uint8_t x, uint8_t y, uint8_t color) {
   int i;
 
@@ -135,7 +149,6 @@ void NovaVGAClass::drawString(const char *str, uint8_t x, uint8_t y, uint8_t col
   }
 }
 
-//void NovaVGAClass::drawString(const String str, Point p, uint8_t color) { // XXX String
 void NovaVGAClass::drawString(const char *str, Point p, uint8_t color) {
   drawString(str, p.x, p.y, color);
 }

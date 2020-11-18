@@ -70,9 +70,10 @@ struct Rect {
 
 class NovaVGAClass {
   private:
-    static bool manual_render_present_;
-    static uint32_t palette_[]; // extension
+    static bool manual_render_present_; // extension
+    static uint32_t palette_[];         // extension
     static uint8_t cspin_;
+    static bool quit_;                  // extension
 
     static SDL_Renderer *renderer_; // extension
     static SDL_Surface *surface_;   // extension
@@ -109,18 +110,17 @@ class NovaVGAClass {
     static const uint8_t Orange       = 0x34;
     static const uint8_t None         = 0xff;
 
-    //static void init(const String title, bool manual_render_present, int zoom_level);
     static void init(const char *title, bool manual_render_present, int zoom_level); // extension
     static void init(uint8_t cspin);
     static void quit(); // extension
 
+    static void pollEventRun();  // extension
     static void renderPresent(); // extension
+    static bool shouldQuit();    // extension
 
     static void drawChar(char ch, uint8_t x, uint8_t y, uint8_t color);
     static void drawChar(char ch, Point p, uint8_t color);
-    //static void drawString(const String str, uint8_t x, uint8_t y, uint8_t color); // XXX String
     static void drawString(const char *str, uint8_t x, uint8_t y, uint8_t color);
-    //static void drawString(const String str, Point p, uint8_t color); // XXX String
     static void drawString(const char *str, Point p, uint8_t color);
     static void fillRect(uint8_t x, uint8_t y, uint8_t w, uint8_t h, uint8_t color);
     static void fillRect(Rect r, uint8_t color);

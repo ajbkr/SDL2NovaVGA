@@ -1,5 +1,10 @@
 #include "NovaVGA.h"
 
+#if !defined(ARDUINO)
+#define MANUAL_RENDER_PRESENT true
+#define ZOOM_LEVEL 4
+#endif
+
 #define CS_PIN 10
 
 void fillStripes(uint8_t color1, uint8_t color2, bool vertical) {
@@ -19,12 +24,16 @@ void fillStripes(uint8_t color1, uint8_t color2, bool vertical) {
 
 void setup() {
 #if !defined(ARDUINO)
-  NovaVGA.init("Stripes", false, 4);
+  NovaVGA.init("Stripes", MANUAL_RENDER_PRESENT, ZOOM_LEVEL);
 #else
   NovaVGA.init(CS_PIN);
 #endif
 
   fillStripes(NovaVGA.Green, NovaVGA.Black, true);
+
+#if !defined(ARDUINO) && MANUAL_RENDER_PRESENT
+  NovaVGA.renderPresent();
+#endif
 }
 
 void loop() {
@@ -32,18 +41,15 @@ void loop() {
 }
 
 #if !defined(ARDUINO)
-#include <iostream> // cin, getline()
-#include <cstdlib>  // EXIT_SUCCESS
-#include <string>   // string
-
-int main(int argc, char *argv[]) {
-  std::string s;
-
+int main() {
   setup();
-  loop();
-  std::getline(std::cin, s);
+
+  while ( !NovaVGA.shouldQuit()) {
+    loop();
+    NovaVGA.pollEventRun();
+  }
+
   NovaVGA.quit();
-  // XXX unreached
-  return EXIT_SUCCESS;
+  return 0;
 }
 #endif

@@ -2,6 +2,7 @@
 
 #if !defined(ARDUINO)
 #define MANUAL_RENDER_PRESENT true
+#define ZOOM_LEVEL 4
 #endif
 
 #define CS_PIN 10
@@ -69,7 +70,7 @@ void mandelbrotDraw(float center_x, float center_y, float radius) {
 
 void setup() {
 #if !defined(ARDUINO)
-  NovaVGA.init("Mandelbrot", MANUAL_RENDER_PRESENT, 4);
+  NovaVGA.init("Mandelbrot", MANUAL_RENDER_PRESENT, ZOOM_LEVEL);
 #else
   NovaVGA.init(CS_PIN);
 #endif
@@ -78,7 +79,7 @@ void setup() {
 
   mandelbrotDraw(-1.0F, 0.0F, 1.0F);
 
-#if !defined(ARDUINO) && defined(MANUAL_RENDER_PRESENT)
+#if !defined(ARDUINO) && MANUAL_RENDER_PRESENT
   NovaVGA.renderPresent();
 #endif
 }
@@ -88,18 +89,15 @@ void loop() {
 }
 
 #if !defined(ARDUINO)
-#include <iostream> // cin, getline()
-#include <cstdlib>  // EXIT_SUCCESS
-#include <string>   // string
-
-int main(int argc, char *argv[]) {
-  std::string s;
-
+int main() {
   setup();
-  loop();
-  std::getline(std::cin, s);
+
+  while ( !NovaVGA.shouldQuit()) {
+    loop();
+    NovaVGA.pollEventRun();
+  }
+
   NovaVGA.quit();
-  // XXX unreached
-  return EXIT_SUCCESS;
+  return 0;
 }
 #endif

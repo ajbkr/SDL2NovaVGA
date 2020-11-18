@@ -1,5 +1,10 @@
 #include "NovaVGA.h"
 
+#if !defined(ARDUINO)
+#define MANUAL_RENDER_PRESENT false
+#define ZOOM_LEVEL 4
+#endif
+
 #define CS_PIN 10
 
 #define SCREEN_CHAR_WIDTH  NovaVGA.SCREEN_WIDTH  / NovaVGA.CHAR_WIDTH
@@ -10,7 +15,7 @@ int col = 0;
 
 void setup() {
 #if !defined(ARDUINO)
-  NovaVGA.init("Text", false, 4);
+  NovaVGA.init("Text", MANUAL_RENDER_PRESENT, ZOOM_LEVEL);
 #else
   NovaVGA.init(CS_PIN);
 #endif
@@ -20,6 +25,10 @@ void setup() {
   NovaVGA.drawString("Hello\nWorld", 0, 0, NovaVGA.Green);
 
   row = NovaVGA.CHAR_HEIGHT * 3;
+
+#if !defined(ARDUINO) && MANUAL_RENDER_PRESENT
+  NovaVGA.renderPresent();
+#endif
 }
 
 void loop() {
@@ -30,17 +39,20 @@ void loop() {
 
 #if !defined(ARDUINO)
 #include <iostream> // cin, getline()
-#include <cstdlib>  // EXIT_SUCCESS
 #include <string>   // string
 
-int main(int argc, char *argv[]) {
+int main() {
   std::string s;
 
   setup();
-  loop();
-  std::getline(std::cin, s);
+
+  while ( !NovaVGA.shouldQuit()) {
+    loop();
+    std::getline(std::cin, s);
+    NovaVGA.pollEventRun();
+  }
+
   NovaVGA.quit();
-  // XXX unreached
-  return EXIT_SUCCESS;
+  return 0;
 }
 #endif
