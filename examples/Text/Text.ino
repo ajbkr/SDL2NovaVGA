@@ -10,8 +10,8 @@
 #define SCREEN_CHAR_WIDTH  NovaVGA.SCREEN_WIDTH  / NovaVGA.CHAR_WIDTH
 #define SCREEN_CHAR_HEIGHT NovaVGA.SCREEN_HEIGHT / NovaVGA.CHAR_HEIGHT
 
-int row = 0;
-int col = 0;
+uint8_t row = 0;
+uint8_t col = 0;
 
 void setup() {
 #if !defined(ARDUINO)

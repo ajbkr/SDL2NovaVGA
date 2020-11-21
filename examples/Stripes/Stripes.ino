@@ -8,9 +8,9 @@
 #define CS_PIN 10
 
 void fillStripes(uint8_t color1, uint8_t color2, bool vertical) {
+  uint8_t w, h;
   uint8_t c;
-  int w, h;
-  int high;
+  bool high;
 
   for (h = 0; h < NovaVGA.SCREEN_HEIGHT; ++h) {
     for (w = 0; w < NovaVGA.SCREEN_WIDTH; ++w) {

@@ -11,7 +11,7 @@
 NovaVGAClass NovaVGA;
 
 bool NovaVGAClass::manual_render_present_ = false;
-uint32_t NovaVGAClass::palette_[64];
+Uint32 NovaVGAClass::palette_[MAX_COLOR+1];
 uint8_t NovaVGAClass::cspin_;
 bool NovaVGAClass::quit_;
 
@@ -97,8 +97,8 @@ bool NovaVGAClass::shouldQuit() {
 }
 
 void NovaVGAClass::initRgb222Palette_(const SDL_PixelFormat *format) {
-  int r, g, b;
-  int i;
+  Uint8 r, g, b;
+  uint8_t i;
 
   i = 0;
   for (r = 0; r < 4; ++r) {
@@ -140,7 +140,7 @@ void NovaVGAClass::drawChar(char ch, Point p, uint8_t color) {
 }
 
 void NovaVGAClass::drawString(const char *str, uint8_t x, uint8_t y, uint8_t color) {
-  int i;
+  uint8_t i;
 
   i = 0;
   while (str[i] != '\0') {
@@ -157,7 +157,7 @@ void NovaVGAClass::fillRect(uint8_t x, uint8_t y, uint8_t w, uint8_t h, uint8_t 
   SDL_Rect rect;
   Uint8 r, g, b;
 
-  SDL_GetRGB(palette_[color & 0x3f], surface_->format, &r, &g, &b);
+  SDL_GetRGB(palette_[color & MAX_COLOR], surface_->format, &r, &g, &b);
   SDL_SetRenderDrawColor(renderer_, r, g, b, SDL_ALPHA_OPAQUE);
   rect.x = x;
   rect.y = y;
@@ -177,7 +177,7 @@ void NovaVGAClass::fillRect(Rect r, uint8_t color) {
 void NovaVGAClass::fillScreen(uint8_t color) {
   Uint8 r, g, b;
 
-  SDL_GetRGB(palette_[color & 0x3f], surface_->format, &r, &g, &b);
+  SDL_GetRGB(palette_[color & MAX_COLOR], surface_->format, &r, &g, &b);
   SDL_SetRenderDrawColor(renderer_, r, g, b, SDL_ALPHA_OPAQUE);
   SDL_RenderClear(renderer_);
 
@@ -193,7 +193,7 @@ void NovaVGAClass::writePixel(uint8_t x, uint8_t y, uint8_t color) {
     return;
   }
 
-  SDL_GetRGB(palette_[color & 0x3f], surface_->format, &r, &g, &b);
+  SDL_GetRGB(palette_[color & MAX_COLOR], surface_->format, &r, &g, &b);
   SDL_SetRenderDrawColor(renderer_, r, g, b, SDL_ALPHA_OPAQUE);
   SDL_RenderDrawPoint(renderer_, x, y);
 
